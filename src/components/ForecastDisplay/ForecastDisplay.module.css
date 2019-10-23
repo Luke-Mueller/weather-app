@@ -1,0 +1,18 @@
+.Forecast {
+    width: 85%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgb(153, 204, 255);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.Forecast div {
+    width: 20%;
+    padding: 5px;
+    text-align: center;
+}

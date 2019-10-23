@@ -1,0 +1,19 @@
+.Spinner {
+ height: 80px;
+ width: 80px;
+ position: fixed;
+ top: 30vh;
+ margin: 0 auto;
+ z-index: 2;
+ background-image: url(../../Assets/svg/spinner.svg);
+ animation-name: spin;
+ animation-duration: 1.5s;
+ animation-iteration-count: infinite;
+ animation-timing-function: linear;
+}
+
+@keyframes spin {
+  0% {transform: rotate(0deg)}
+  50% {transform: rotate(180deg)}
+  100% {transform: rotate(360deg)}
+}
