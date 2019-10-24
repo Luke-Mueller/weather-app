@@ -15,13 +15,44 @@ class Weather extends Component {
   state = {
     error: '',
     loading: false,
-    showFormModal: true,
-    cities: []
+    showFormModal: true
   }
+
+  searchHandler = (e) => {
+    const input = e.target.elements.city.value;
+    this.setState({loading: true});
+    const cities = [];
+  
+    fetch('city.list.json')
+      .then(res => res.json())
+      .then(cityList => {
+        // eslint-disable-next-line no-unused-vars
+        for(let city of cityList) {
+          if(city.name.toLowerCase() === input.toLowerCase()) cities.push(city)
+        }
+        if(cities.length === 0 || input === '') {
+          this.noResults(input);
+        } else if(cities.length === 1) {
+          console.log(cities)
+          this.singleResult(cities[0])
+        } else if(cities.length > 1) {
+          this.multiResults(cities)
+        };
+      })
+      .catch(err => {
+        this.setState({error: err, loading: false});
+        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+        wait(3500).then(() => {
+          this.setState({error: ''})
+        });
+      })
+    e.target.elements.city.value = '';
+    e.preventDefault();
+  };
 
   noResults = (input) => {
     if (input === '') this.setState({error: `No city entered`, loading: false});
-    else this.setState({error: `"${input}" not found`, loading: false});
+    else this.setState({cities: null, error: `"${input}" not found`, loading: false});
 
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     wait(3500).then(() => {
@@ -35,10 +66,8 @@ class Weather extends Component {
       fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${city.coord.lon}&y=${city.coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
+          this.setState({state: data.result.geographies["Census Blocks"][0].STATE,});
           this.getDataHandler(city.id);
-          this.setState({
-            state: data.result.geographies["Census Blocks"][0].STATE,
-          });
         })
         .catch(err => {
           this.setState({error: err, loading: false});
@@ -51,7 +80,6 @@ class Weather extends Component {
   }
 
   multiResults = (cities) => {
-    console.log(cities)
     let cityStates = [];
     for(let i = 0; i < cities.length; i++) {
       if(cities[i].country !== 'US') {
@@ -78,42 +106,12 @@ class Weather extends Component {
     }
   }
     
-  searchHandler = (e) => {
-    const input = e.target.elements.city.value;
-    this.setState({loading: true});
-    const cities = [];
-  
-    fetch('city.list.json')
-      .then(res => res.json())
-      .then(cityList => {
-        // eslint-disable-next-line no-unused-vars
-        for(let city of cityList) {
-          if(city.name.toLowerCase() === input.toLowerCase()) cities.push(city)
-        }
-        if(cities.length === 0 || input === '') {
-          this.noResults(input);
-        } else if(cities.length === 1) {
-          this.singleResult(cities[0])
-        } else if(cities.length > 1) {
-          this.multiResults(cities)
-        };
-      })
-      .catch(err => {
-        this.setState({error: err, loading: false});
-        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-        wait(3500).then(() => {
-          this.setState({error: ''})
-        });
-      })
-    e.target.elements.city.value = '';
-    e.preventDefault();
-  };
-
   getDataHandler = (id) => {
     this.setState({cities: []});
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
+        console.log()
         this.setState({
           weather: data,
         })
@@ -140,9 +138,14 @@ class Weather extends Component {
       });
   };
 
-  getDataFromListHandler = (e) => {
+  selectCityHandler = e => {
     console.log(e.target.parentElement.parentElement.id)
-    // this.getDataHandler(e.target.id)
+    // this.singleResult(
+    //   e.target.parentElement.parentElement.id,
+    //   e.target.parentElement.parentElement.country,
+    //   e.target.parentElement.parentElement.lat,
+    //   e.target.parentElement.parentElement.lon
+    // )
     e.preventDefault();
   };
 
@@ -166,11 +169,19 @@ class Weather extends Component {
     this.state.loading ? spinner = <Spinner /> : spinner = null;
 
     this.state.cities && this.state.cities.length > 1 && !this.state.loading && !this.state.forecast ?
-      citiesList = <CitiesList cities={this.state.cities} getData={this.getDataFromListHandler}/> 
-      : citiesList = null;
+      citiesList = 
+        <CitiesList 
+          cities={this.state.cities} 
+          selectCity={this.selectCityHandler} 
+          setState={this.setStateHandler}/> 
+        : citiesList = null;
     
     if(this.state.weather && !this.state.showFormModal) {
-      weatherDisplay = <WeatherDisplay weather={this.state.weather} state={this.state.state} changeLocation={this.changeLocation}/>
+      weatherDisplay = 
+        <WeatherDisplay 
+          weather={this.state.weather} 
+          state={this.state.state} 
+          changeLocation={this.changeLocation}/>
       toolbar = <Toolbar />
     };
 

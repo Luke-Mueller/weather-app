@@ -38,11 +38,18 @@ const weatherDisplay = (props) => {
   }
   const fullDate = `${day} ${date.getMonth()}. ${date.getDate()}. ${date.getFullYear()}`;
 
+  let h2;
+  if(props.weather.sys.country !== 'US') {
+    h2 = <h2>{props.weather.name}, {props.weather.sys.country}</h2>
+  } else {
+    h2 = <h2>{props.weather.name}</h2>
+  }
+
   return (
     <div className={classes.WeatherDisplay}>
       <h3>{fullDate}</h3>
       <div>
-        <h2>{props.weather.name}, {props.state}</h2>
+        {h2}
         <button onClick={props.changeLocation}/>
       </div>
       <br/><br/>
