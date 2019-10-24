@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './WeatherDisplay.module.css';
 
 const weatherDisplay = (props) => {
+  console.log('weatherdisplay props: ', props)
   const temp = parseInt(props.weather.main.temp);
   // const today = new Date();
   // const sunrise = new Date(props.weather.data.sys.sunrise * 1000).getTime();

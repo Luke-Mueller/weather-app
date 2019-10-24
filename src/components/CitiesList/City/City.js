@@ -11,13 +11,15 @@ const city = (props) => {
         {props.city.name}, {props.city.state}, {props.city.country}
         <br/> 
         [{props.city.coord.lat}&#176;, {props.city.coord.lon}&#176;]
+        <button onClick={props.getData}>Select</button>
       </li>)
   } else {
     lineItem = (
-      <li>
+      <li onClick={props.getData}>
         {props.city.name}, {props.city.country}
         <br/> 
         [{props.city.coord.lat}&#176;, {props.city.coord.lon}&#176;]
+        <button onClick={props.getData}>Select</button>
       </li>)
   }
 
@@ -26,7 +28,7 @@ const city = (props) => {
   // }
 
   return (
-    <div className={classes.City} id={props.city.id} onClick={props.getData}>
+    <div className={classes.City} id={props.city.id} >
         {lineItem}
     </div>
   )

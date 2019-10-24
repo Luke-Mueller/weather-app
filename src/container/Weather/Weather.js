@@ -40,6 +40,13 @@ class Weather extends Component {
             state: data.result.geographies["Census Blocks"][0].STATE,
           });
         })
+        .catch(err => {
+          this.setState({error: err, loading: false});
+          const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+          wait(3500).then(() => {
+            this.setState({error: ''})
+          });
+        })
       }
   }
 
@@ -60,6 +67,13 @@ class Weather extends Component {
         .then(() => {
           this.setState({cities: cityStates, loading: false})
         })
+        .catch(err => {
+          this.setState({error: err, loading: false});
+          const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+          wait(3500).then(() => {
+            this.setState({error: ''})
+          });
+        })
       } 
     }
   }
@@ -69,7 +83,6 @@ class Weather extends Component {
     this.setState({loading: true});
     const cities = [];
   
-
     fetch('city.list.json')
       .then(res => res.json())
       .then(cityList => {
@@ -85,6 +98,13 @@ class Weather extends Component {
           this.multiResults(cities)
         };
       })
+      .catch(err => {
+        this.setState({error: err, loading: false});
+        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+        wait(3500).then(() => {
+          this.setState({error: ''})
+        });
+      })
     e.target.elements.city.value = '';
     e.preventDefault();
   };
@@ -99,8 +119,12 @@ class Weather extends Component {
         })
       })
       .catch(err => {
-        console.log(err)
-      });
+        this.setState({error: err, loading: false});
+        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+        wait(3500).then(() => {
+          this.setState({error: ''})
+        });
+      })
       
     fetch(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
@@ -117,7 +141,8 @@ class Weather extends Component {
   };
 
   getDataFromListHandler = (e) => {
-    this.getDataHandler(e.target.id)
+    console.log(e.target.parentElement.parentElement.id)
+    // this.getDataHandler(e.target.id)
     e.preventDefault();
   };
 
@@ -171,23 +196,3 @@ class Weather extends Component {
 }
 
 export default Weather;
-
-
-// multiResults = (cities) => {
-//   console.log(cities)
-//   let cityStates = [];
-//   for(let i = 0; i < cities.length; i++) {
-//     if(cities[i].country !== 'US') {
-//       cityStates.push(cities[i])
-//     } else {
-//       fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${cities[i].coord.lon}&y=${cities[i].coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
-//       .then(res => res.json())
-//       .then(data => {
-//         cities[i].state = data.result.geographies["Census Blocks"][0].STATE; 
-//         cityStates.push(cities[i]);
-//         this.setState({cities: cityStates})
-//       })
-//     } 
-//   }
-//   this.setState({loading: false});
-// }
