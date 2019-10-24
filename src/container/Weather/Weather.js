@@ -6,7 +6,6 @@ import Modal from "../../components/Modal/Modal";
 import Form from "../../components/Form/Form";
 import WeatherDisplay from '../../components/WeatherDisplay/WeatherDisplay';
 import Spinner from '../../components/Spinner/Spinner';
-import Toolbar from '../../components/Toolbar/Toolbar';
 import ForecastDisplay from '../../components/ForecastDisplay/ForecastDisplay';
 const API_KEY = '8255d1850797d8e23d1523be11d8b8b6';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -51,7 +50,7 @@ class Weather extends Component {
   };
 
   noResults = (input) => {
-    if (input === '') this.setState({error: `No city entered`, loading: false});
+    if (input === '') this.setState({cities : null, error: `No city entered`, loading: false});
     else this.setState({cities: null, error: `"${input}" not found`, loading: false});
 
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -111,7 +110,7 @@ class Weather extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
-        console.log()
+        console.log('weather: ', data)
         this.setState({
           weather: data,
         })
@@ -138,14 +137,9 @@ class Weather extends Component {
       });
   };
 
-  selectCityHandler = e => {
-    console.log(e.target.parentElement.parentElement.id)
-    // this.singleResult(
-    //   e.target.parentElement.parentElement.id,
-    //   e.target.parentElement.parentElement.country,
-    //   e.target.parentElement.parentElement.lat,
-    //   e.target.parentElement.parentElement.lon
-    // )
+  getDataFromListHandler = e => {
+    const id = e.target.parentElement.parentElement.id;
+    this.getDataHandler(id)
     e.preventDefault();
   };
 
@@ -163,7 +157,6 @@ class Weather extends Component {
     let citiesList,
         forecastDisplay,
         spinner,
-        toolbar,
         weatherDisplay;
 
     this.state.loading ? spinner = <Spinner /> : spinner = null;
@@ -172,7 +165,7 @@ class Weather extends Component {
       citiesList = 
         <CitiesList 
           cities={this.state.cities} 
-          selectCity={this.selectCityHandler} 
+          getDataFromList={this.getDataFromListHandler} 
           setState={this.setStateHandler}/> 
         : citiesList = null;
     
@@ -182,7 +175,6 @@ class Weather extends Component {
           weather={this.state.weather} 
           state={this.state.state} 
           changeLocation={this.changeLocation}/>
-      toolbar = <Toolbar />
     };
 
     this.state.forecast && !this.state.showFormModal ? 
@@ -199,7 +191,6 @@ class Weather extends Component {
         {spinner}
         {citiesList}
         {weatherDisplay}
-        {toolbar}
         {forecastDisplay}
       </div>
     )

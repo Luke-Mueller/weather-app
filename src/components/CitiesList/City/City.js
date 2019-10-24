@@ -164,7 +164,7 @@ const city = (props) => {
         {props.city.name}, {state}, {props.city.country}
         <br/> 
         [{props.city.coord.lat}&#176;, {props.city.coord.lon}&#176;]
-        <button onClick={props.selectCity}>Select</button>
+        <button onClick={props.getDataFromList}>Select</button>
       </li>
     )
   } else {
@@ -173,7 +173,7 @@ const city = (props) => {
         {props.city.name}, {props.city.country}
         <br/> 
         [{props.city.coord.lat}&#176;, {props.city.coord.lon}&#176;]
-        <button onClick={props.selectCity}>Select</button>
+        <button onClick={props.getDataFromList}>Select</button>
       </li>
     )
   }

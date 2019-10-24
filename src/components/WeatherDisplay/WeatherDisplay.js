@@ -52,10 +52,11 @@ const weatherDisplay = (props) => {
         {h2}
         <button onClick={props.changeLocation}/>
       </div>
-      <br/><br/>
+      {/* <br/><br/> */}
       <h1>{temp}&#176;f</h1>
       <h4>{props.weather.weather[0].description}</h4>
-      {/*<h4>{sunrise}</h4>*/}
+      <h4>cloud-cover: {props.weather.clouds.all}%</h4>
+      <h4>humidity: {props.weather.main.humidity}%</h4>
     </div>
   )
 };

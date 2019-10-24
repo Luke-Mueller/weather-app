@@ -8,7 +8,7 @@ const citiesList = (props) => {
     <City 
       key={city.id} 
       city={city} 
-      selectCity={props.selectCity}/>
+      getDataFromList={props.getDataFromList}/>
   )
 
   return (
