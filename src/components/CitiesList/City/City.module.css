@@ -2,8 +2,10 @@
   margin: 5px;
   height: 18%;
   display: flex;
+  justify-content: center;
   align-items: center;
   border: 1px solid grey;
+  padding: 10px;
   z-index: 100;
 }
 
@@ -13,6 +15,10 @@
 }
 
 .City li {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  
   color: white;
   z-index: 0;
 }
