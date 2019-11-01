@@ -22,17 +22,19 @@ class Weather extends Component {
     this.setState({loading: true});
     const cities = [];
   
-    fetch('city.list.json')
+    fetch('city.list.min.json')
       .then(res => res.json())
       .then(cityList => {
         // eslint-disable-next-line no-unused-vars
         for(let city of cityList) {
-          if(city.name.toLowerCase() === input.toLowerCase()) cities.push(city)
+          if(city.name.toLowerCase() === input.toLowerCase()) {
+            cities.push(city)
+            console.log(city)
+          }
         }
         if(cities.length === 0 || input === '') {
           this.noResults(input);
         } else if(cities.length === 1) {
-          console.log(cities)
           this.singleResult(cities[0])
         } else if(cities.length > 1) {
           this.multiResults(cities)
@@ -83,15 +85,13 @@ class Weather extends Component {
     for(let i = 0; i < cities.length; i++) {
       if(cities[i].country !== 'US') {
         cityStates.push(cities[i])
+        this.setState({cities: cityStates, loading: false})
       } else {
         fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${cities[i].coord.lon}&y=${cities[i].coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
           cities[i].state = data.result.geographies["Census Blocks"][0].STATE; 
           cityStates.push(cities[i]);
-          return cityStates
-        })
-        .then(() => {
           this.setState({cities: cityStates, loading: false})
         })
         .catch(err => {
@@ -101,7 +101,7 @@ class Weather extends Component {
             this.setState({error: ''})
           });
         })
-      } 
+      }
     }
   }
     
