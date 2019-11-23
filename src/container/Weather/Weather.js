@@ -29,7 +29,6 @@ class Weather extends Component {
         for(let city of cityList) {
           if(city.name.toLowerCase() === input.toLowerCase()) {
             cities.push(city)
-            console.log(city)
           }
         }
         if(cities.length === 0 || input === '') {
@@ -110,7 +109,6 @@ class Weather extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
-        console.log('weather: ', data)
         this.setState({
           weather: data,
         })
@@ -159,16 +157,25 @@ class Weather extends Component {
         spinner,
         weatherDisplay;
 
-    this.state.loading ? spinner = <Spinner /> : spinner = null;
-
-    this.state.cities && this.state.cities.length > 1 && !this.state.loading && !this.state.forecast ?
+    if(
+      this.state.cities && 
+      this.state.cities.length > 1 && 
+      !this.state.loading && 
+      !this.state.forecast 
+    ) { 
       citiesList = 
         <CitiesList 
           cities={this.state.cities} 
           getDataFromList={this.getDataFromListHandler} 
           setState={this.setStateHandler}/> 
-        : citiesList = null;
+    };
+
+    if(this.state.forecast && !this.state.showFormModal) {
+      forecastDisplay = <ForecastDisplay forecast={this.state.forecast}/>
+    }; 
     
+    if(this.state.loading) spinner = <Spinner />;
+
     if(this.state.weather && !this.state.showFormModal) {
       weatherDisplay = 
         <WeatherDisplay 
@@ -176,10 +183,6 @@ class Weather extends Component {
           state={this.state.state} 
           changeLocation={this.changeLocation}/>
     };
-
-    this.state.forecast && !this.state.showFormModal ? 
-      forecastDisplay = <ForecastDisplay forecast={this.state.forecast}/>
-      : forecastDisplay = null;
 
     return (
       <div className={classes.Weather}>

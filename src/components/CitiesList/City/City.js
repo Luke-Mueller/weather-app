@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './City.module.css';
 
-const city = (props) => {
+const city = props => {
 
   let state;
   switch(props.city.state) {
@@ -178,10 +178,8 @@ const city = (props) => {
   }
 
   return (
-    <div 
-      className={classes.City} 
-      id={props.city.id}>
-        {lineItem}
+    <div className={classes.City} id={props.city.id}>
+      {lineItem}
     </div>
   )
 }

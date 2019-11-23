@@ -3,12 +3,8 @@ import React from 'react';
 import classes from './WeatherDisplay.module.css';
 
 const weatherDisplay = (props) => {
-  console.log('weatherdisplay props: ', props)
   const temp = parseInt(props.weather.main.temp);
-  // const today = new Date();
-  // const sunrise = new Date(props.weather.data.sys.sunrise * 1000).getTime();
   let date = new Date((props.weather.dt) * 1000);
-  // const gmtOffset = date.split(' ');
 
   let day = date.getDay();
   switch (day) {
@@ -52,7 +48,6 @@ const weatherDisplay = (props) => {
         {h2}
         <button onClick={props.changeLocation}/>
       </div>
-      {/* <br/><br/> */}
       <h1>{temp}&#176;f</h1>
       <h4>{props.weather.weather[0].description}</h4>
       <h4>cloud-cover: {props.weather.clouds.all}%</h4>

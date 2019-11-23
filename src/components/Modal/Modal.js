@@ -22,7 +22,6 @@ const modal = (props) => {
         </div>
       </div>
     </div>
-    
   )
 };
 
