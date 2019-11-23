@@ -17,6 +17,7 @@ class Weather extends Component {
     showFormModal: true
   }
 
+//  Searches for the city entered by the user in the modal
   searchHandler = (e) => {
     const input = e.target.elements.city.value;
     this.setState({loading: true});
@@ -28,15 +29,15 @@ class Weather extends Component {
         // eslint-disable-next-line no-unused-vars
         for(let city of cityList) {
           if(city.name.toLowerCase() === input.toLowerCase()) {
-            cities.push(city)
+            cities.push(city);
           }
         }
         if(cities.length === 0 || input === '') {
           this.noResults(input);
         } else if(cities.length === 1) {
-          this.singleResult(cities[0])
+          this.singleResult(cities[0]);
         } else if(cities.length > 1) {
-          this.multiResults(cities)
+          this.multiResults(cities);
         };
       })
       .catch(err => {
@@ -45,24 +46,32 @@ class Weather extends Component {
         wait(3500).then(() => {
           this.setState({error: ''})
         });
-      })
+      });
+
     e.target.elements.city.value = '';
     e.preventDefault();
   };
 
+//  Displays an error message to the user if their city is not found
   noResults = (input) => {
-    if (input === '') this.setState({cities : null, error: `No city entered`, loading: false});
-    else this.setState({cities: null, error: `"${input}" not found`, loading: false});
-
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-    wait(3500).then(() => {
-      this.setState({error: ''})
-    });
-  }
 
+    if (input === '') {
+      this.setState({cities : null, error: `No city entered`, loading: false});
+    } else {
+      this.setState({cities: null, error: `"${input}" not found`, loading: false});
+    }
+
+    wait(3500).then(() => {
+      this.setState({error: ''});
+    });
+  };
+
+//  Fetches weather data if the city search retrieves one result
   singleResult = (city) => {
-    if (city.country !== 'US') this.getDataHandler(city.id);
-      else if(city.country === 'US') {
+    if (city.country !== 'US') {
+      this.getDataHandler(city.id);
+    } else if(city.country === 'US') {
       fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${city.coord.lon}&y=${city.coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
@@ -73,53 +82,53 @@ class Weather extends Component {
           this.setState({error: err, loading: false});
           const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           wait(3500).then(() => {
-            this.setState({error: ''})
+            this.setState({error: ''});
           });
-        })
-      }
-  }
+        });
+    };
+  };
 
+//  Creates a list of search results and fetches state if city is in US
   multiResults = (cities) => {
     let cityStates = [];
     for(let i = 0; i < cities.length; i++) {
       if(cities[i].country !== 'US') {
-        cityStates.push(cities[i])
-        this.setState({cities: cityStates, loading: false})
+        cityStates.push(cities[i]);
+        this.setState({cities: cityStates, loading: false});
       } else {
         fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${cities[i].coord.lon}&y=${cities[i].coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
           cities[i].state = data.result.geographies["Census Blocks"][0].STATE; 
           cityStates.push(cities[i]);
-          this.setState({cities: cityStates, loading: false})
+          this.setState({cities: cityStates, loading: false});
         })
         .catch(err => {
           this.setState({error: err, loading: false});
           const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           wait(3500).then(() => {
-            this.setState({error: ''})
+            this.setState({error: ''});
           });
-        })
-      }
-    }
-  }
-    
+        });
+      };
+    };
+  };
+   
+//  Fetches weather data
   getDataHandler = (id) => {
     this.setState({cities: []});
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          weather: data,
-        })
+        this.setState({weather: data});
       })
       .catch(err => {
         this.setState({error: err, loading: false});
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         wait(3500).then(() => {
-          this.setState({error: ''})
+          this.setState({error: ''});
         });
-      })
+      });
       
     fetch(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
@@ -137,7 +146,7 @@ class Weather extends Component {
 
   getDataFromListHandler = e => {
     const id = e.target.parentElement.parentElement.id;
-    this.getDataHandler(id)
+    this.getDataHandler(id);
     e.preventDefault();
   };
 
@@ -148,7 +157,7 @@ class Weather extends Component {
       weather: null,
       forecast: null,
       state: null
-    })
+    });
   };
 
   render() {
