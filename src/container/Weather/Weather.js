@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
-import classes from './Weather.module.css';
 import CitiesList from '../../components/CitiesList/CitiesList';
 import Modal from "../../components/Modal/Modal";
-import Form from "../../components/Form/Form";
 import WeatherDisplay from '../../components/WeatherDisplay/WeatherDisplay';
 import Spinner from '../../components/Spinner/Spinner';
 import ForecastDisplay from '../../components/ForecastDisplay/ForecastDisplay';
+
+import classes from './Weather.module.css';
+
 const API_KEY = '8255d1850797d8e23d1523be11d8b8b6';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
@@ -14,10 +15,12 @@ class Weather extends Component {
   state = {
     error: '',
     loading: false,
-    showFormModal: true
+    showFormModal: true,
+    state: undefined
   }
 
 //  Searches for the city entered by the user in the modal
+
   searchHandler = (e) => {
     const input = e.target.elements.city.value;
     this.setState({loading: true});
@@ -53,6 +56,7 @@ class Weather extends Component {
   };
 
 //  Displays an error message to the user if their city is not found
+
   noResults = (input) => {
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -67,7 +71,8 @@ class Weather extends Component {
     });
   };
 
-//  Fetches weather data if the city search retrieves one result
+//  Fetches weather data if the city search retrieves one result.
+
   singleResult = (city) => {
     if (city.country !== 'US') {
       this.getDataHandler(city.id);
@@ -88,9 +93,11 @@ class Weather extends Component {
     };
   };
 
-//  Creates a list of search results and fetches state if city is in US
+//  Fetches state location of US cities from geocoding API
+
   multiResults = (cities) => {
     let cityStates = [];
+
     for(let i = 0; i < cities.length; i++) {
       if(cities[i].country !== 'US') {
         cityStates.push(cities[i]);
@@ -114,9 +121,12 @@ class Weather extends Component {
     };
   };
    
-//  Fetches weather data
+//  Fetches weather data from openweathermaps API
+
   getDataHandler = (id) => {
     this.setState({cities: []});
+
+    // fetches current weather data
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
@@ -130,6 +140,7 @@ class Weather extends Component {
         });
       });
       
+    //  fetches forecast data  
     fetch(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
@@ -161,12 +172,16 @@ class Weather extends Component {
   };
 
   render() {
+
+    //  Conditionally render components
+
     let citiesList,
         forecastDisplay,
+        modal,
         spinner,
         weatherDisplay;
 
-    if(
+    if (
       this.state.cities && 
       this.state.cities.length > 1 && 
       !this.state.loading && 
@@ -179,13 +194,21 @@ class Weather extends Component {
           setState={this.setStateHandler}/> 
     };
 
-    if(this.state.forecast && !this.state.showFormModal) {
+    if (this.state.forecast && !this.state.showFormModal) {
       forecastDisplay = <ForecastDisplay forecast={this.state.forecast}/>
     }; 
-    
-    if(this.state.loading) spinner = <Spinner />;
 
-    if(this.state.weather && !this.state.showFormModal) {
+    if (this.state.showFormModal) {
+      modal = 
+      <Modal 
+        error={this.state.error} 
+        search={this.searchHandler}
+        show={this.state.showFormModal} />
+    };
+    
+    if (this.state.loading) spinner = <Spinner />;
+
+    if (this.state.weather && !this.state.showFormModal) {
       weatherDisplay = 
         <WeatherDisplay 
           weather={this.state.weather} 
@@ -195,11 +218,7 @@ class Weather extends Component {
 
     return (
       <div className={classes.Weather}>
-        <Modal show={this.state.showFormModal}>
-          <Form
-            search={this.searchHandler}
-            error={this.state.error} />
-        </Modal>
+        {modal}
         {spinner}
         {citiesList}
         {weatherDisplay}

@@ -3,8 +3,6 @@ import React from 'react';
 import classes from './Backdrop.module.css';
 
 const Backdrop = props => {
-
-  console.log(props.show)
   return (
     <div 
         className={classes.Backdrop} 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Backdrop from '../Backdrop/Backdrop';
+import Form from '../Form/Form';
 
 import classes from './Modal.module.css';
 
@@ -15,7 +16,9 @@ const Modal = props => {
         transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',  
       }}>
         <div>
-          {props.children}
+          <Form
+            search={props.search}
+            error={props.error} />
         </div>
       </div>
     </div>

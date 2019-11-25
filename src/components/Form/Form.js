@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './Form.module.css';
 
-const form = (props) => {
+const Form = (props) => {
   
   return (
     <form 
@@ -22,4 +22,4 @@ const form = (props) => {
   )
 };
 
-export default form;
+export default Form;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './City.module.css';
 
-const city = props => {
+const City = props => {
 
   let state;
   switch(props.city.state) {
@@ -184,4 +184,4 @@ const city = props => {
   )
 }
 
-export default city;
+export default City;

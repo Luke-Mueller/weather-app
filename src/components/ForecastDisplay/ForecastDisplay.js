@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './ForecastDisplay.module.css';
 
-const forecastDisplay = (props) =>  {
+const ForecastDisplay = (props) =>  {
 
   const timezone = props.forecast.city.timezone;
   let time = '';
@@ -72,4 +72,4 @@ const forecastDisplay = (props) =>  {
   )
 };
 
-export default forecastDisplay;
+export default ForecastDisplay;

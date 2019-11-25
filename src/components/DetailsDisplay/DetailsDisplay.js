@@ -1,6 +1,8 @@
+// This component is in development
+
 import React from 'react';
 
-const detailsDisplay = (props) => {
+const DetailsDisplay = (props) => {
   let windDirection;
   const windDirData = props.weather.data.wind.deg;
   if (windDirData >= 349 && windDirData < 11) {
@@ -69,4 +71,4 @@ const detailsDisplay = (props) => {
   )
 };
 
-export default detailsDisplay;
+export default DetailsDisplay;

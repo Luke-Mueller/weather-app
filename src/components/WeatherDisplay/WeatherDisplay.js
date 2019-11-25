@@ -2,7 +2,8 @@ import React from 'react';
 
 import classes from './WeatherDisplay.module.css';
 
-const weatherDisplay = (props) => {
+const WeatherDisplay = (props) => {
+  console.log(props.state)
   const temp = parseInt(props.weather.main.temp);
   let date = new Date((props.weather.dt) * 1000);
 
@@ -32,6 +33,7 @@ const weatherDisplay = (props) => {
     default:
       day = null;
   }
+
   const fullDate = `${day} ${date.getMonth()}. ${date.getDate()}. ${date.getFullYear()}`;
 
   let h2;
@@ -56,4 +58,4 @@ const weatherDisplay = (props) => {
   )
 };
 
-export default weatherDisplay;
+export default WeatherDisplay;

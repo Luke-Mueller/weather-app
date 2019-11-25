@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './CitiesList.module.css'
 import City from './City/City';
 
-const citiesList = (props) => {
+const CitiesList = (props) => {
   const cities = props.cities.map(city => 
     <City 
       key={city.id} 
@@ -18,4 +18,4 @@ const citiesList = (props) => {
   )
 };
 
-export default citiesList;
+export default CitiesList;

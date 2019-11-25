@@ -1,4 +1,9 @@
-To use the weather app, please run npm install and then npm start.
+This app allows users to enter the name of a city worldwide and get present weather conditions as well as a 5 day forecast.  It uses the openweathermaps API to retrieve weather data.  It also uses a Geocoding Services API. 
+
+This project includes the use of class-based components.  I am building a blackjack app called THE NATURAL which uses hooks with functional components.  Check it out, as well!
+
+
+To use the weather app, please open the Weather App folder in your IDE and run `npm install` and then `npm start` in the built-in console.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
