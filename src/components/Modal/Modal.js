@@ -1,16 +1,13 @@
 import React from 'react';
 
+import Backdrop from '../Backdrop/Backdrop';
+
 import classes from './Modal.module.css';
 
-const modal = (props) => {
+const Modal = props => {
   return (
     <div>
-      <div 
-        className={classes.Backdrop} 
-        style={{
-          opacity: props.show ? '1' : '0',
-          transform: props.show ? 'translateY(0)' : 'translateY(100vh)',  
-        }}/>
+      <Backdrop show={props.show} />
       <div 
       className={classes.Modal}
       style={{
@@ -25,4 +22,4 @@ const modal = (props) => {
   )
 };
 
-export default modal;
+export default Modal;
