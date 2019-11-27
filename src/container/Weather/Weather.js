@@ -38,7 +38,7 @@ class Weather extends Component {
         if(cities.length === 0 || input === '') {
           this.noResults(input);
         } else if(cities.length === 1) {
-          this.singleResult(cities[0]);
+          this.getResult(cities[0]);
         } else if(cities.length > 1) {
           this.multiResults(cities);
         };
@@ -71,9 +71,9 @@ class Weather extends Component {
     });
   };
 
-//  Fetches weather data if the city search retrieves one result.
+//  Fetches weather data
 
-  singleResult = (city) => {
+  getResult = (city) => {
     if (city.country !== 'US') {
       this.getDataHandler(city.id);
     } else if(city.country === 'US') {
@@ -155,12 +155,6 @@ class Weather extends Component {
       });
   };
 
-  getDataFromListHandler = e => {
-    const id = e.target.parentElement.parentElement.id;
-    this.getDataHandler(id);
-    e.preventDefault();
-  };
-
   changeLocation = () => {
     this.setState({
       showFormModal: true, 
@@ -190,7 +184,7 @@ class Weather extends Component {
       citiesList = 
         <CitiesList 
           cities={this.state.cities} 
-          getDataFromList={this.getDataFromListHandler} 
+          getResult={this.getResult} 
           setState={this.setStateHandler}/> 
     };
 

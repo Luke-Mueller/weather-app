@@ -4,6 +4,10 @@ import classes from './City.module.css';
 
 const City = props => {
 
+  const getResult = () => {
+    props.getResult(props.city)
+  }
+
   let state;
   switch(props.city.state) {
     case '01':
@@ -164,7 +168,7 @@ const City = props => {
         {props.city.name}, {state}, {props.city.country}
         <br/> 
         {/* [{props.city.coord.lat}&#176;, {props.city.coord.lon}&#176;] */}
-        <button onClick={props.getDataFromList}>Select</button>
+        <button onClick={getResult}>Select</button>
       </li>
     )
   } else {
@@ -172,7 +176,7 @@ const City = props => {
       <li>
         {props.city.name}, {props.city.country}
         <br/> 
-        <button onClick={props.getDataFromList}>Select</button>
+        <button onClick={getResult}>Select</button>
       </li>
     )
   }
