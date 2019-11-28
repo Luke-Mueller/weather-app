@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './WeatherDisplay.module.css';
 
 const WeatherDisplay = (props) => {
-  console.log(props.state)
   const temp = parseInt(props.weather.main.temp);
   let date = new Date((props.weather.dt) * 1000);
 

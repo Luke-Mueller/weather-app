@@ -3,5 +3,3 @@ Things to make:
 1. style citiesList
 
 2. Refine search value. name with extra spaces typed in are not found. eliminate spaces and then compare.
-
-3. get state from coords

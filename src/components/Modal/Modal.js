@@ -10,11 +10,11 @@ const Modal = props => {
     <div>
       <Backdrop show={props.show} />
       <div 
-      className={classes.Modal}
-      style={{
-        opacity: props.show ? '1' : '0',
-        transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',  
-      }}>
+        className={classes.Modal}
+        style={{
+          opacity: props.show ? '1' : '0',
+          transform: props.show ? 'translateY(0)' : 'translateY(-100vh)'  
+        }}>
         <div>
           <Form
             search={props.search}

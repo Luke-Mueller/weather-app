@@ -80,7 +80,7 @@ class Weather extends Component {
       fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${city.coord.lon}&y=${city.coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
-          this.setState({state: data.result.geographies["Census Blocks"][0].STATE,});
+          this.setState({ state: data.result.geographies["Census Blocks"][0].STATE });
           this.getDataHandler(city.id);
         })
         .catch(err => {
@@ -130,13 +130,13 @@ class Weather extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({weather: data});
+        this.setState({ weather: data });
       })
       .catch(err => {
         this.setState({error: err, loading: false});
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         wait(3500).then(() => {
-          this.setState({error: ''});
+          this.setState({ error: '' });
         });
       });
       
@@ -146,8 +146,8 @@ class Weather extends Component {
       .then(data => {
         this.setState({
           forecast: data,
-          showFormModal: false,
-          loading: false
+          loading: false,
+          showFormModal: false
         });
       })
       .catch(err => {
@@ -171,7 +171,6 @@ class Weather extends Component {
 
     let citiesList,
         forecastDisplay,
-        modal,
         spinner,
         weatherDisplay;
 
@@ -192,14 +191,6 @@ class Weather extends Component {
       forecastDisplay = <ForecastDisplay forecast={this.state.forecast}/>
     }; 
 
-    if (this.state.showFormModal) {
-      modal = 
-      <Modal 
-        error={this.state.error} 
-        search={this.searchHandler}
-        show={this.state.showFormModal} />
-    };
-    
     if (this.state.loading) spinner = <Spinner />;
 
     if (this.state.weather && !this.state.showFormModal) {
@@ -212,7 +203,10 @@ class Weather extends Component {
 
     return (
       <div className={classes.Weather}>
-        {modal}
+        <Modal 
+          error={this.state.error} 
+          search={this.searchHandler}
+          show={this.state.showFormModal} />
         {spinner}
         {citiesList}
         {weatherDisplay}
