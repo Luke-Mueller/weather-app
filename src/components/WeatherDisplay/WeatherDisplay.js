@@ -47,7 +47,7 @@ const WeatherDisplay = (props) => {
       <h3>{fullDate}</h3>
       <div>
         {h2}
-        <button onClick={props.changeLocation}/>
+        <button onClick={props.changeLocation} />
       </div>
       <h1>{temp}&#176;f</h1>
       <h4>{props.weather.weather[0].description}</h4>

@@ -39,7 +39,7 @@
 
 .Form button {
     /* align-self: flex-end; */
-    background-image: linear-gradient( rgb(194, 193, 193), white,  rgb(136, 136, 136));
+    background-image: linear-gradient( rgb(155, 155, 155), white,  rgb(100, 100, 100));
     border: 2px solid #858585;
     border-radius: 0 25px 25px 0;
     box-shadow: 2px 2px 5px rgba(0,0,0,.4);
@@ -52,7 +52,12 @@
 }
 
 .Form button:hover {
-    border-color: #58a7ff;
+    border: 2px solid #58a7ff;
+}
+
+.Form button:active {
+    background-image: linear-gradient( rgb(155, 155, 155), rgb(50,50,50),  rgb(155, 155, 155));
+    color: white;
 }
 
 .Form p {

@@ -4,21 +4,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid grey;
+  border-top: 1px solid #ff69b4;
+  border-bottom: 1px solid #ff69b4;
+  border-radius: 8px;
   padding: 10px;
   z-index: 100;
 }
 
-.City:active,
-.City:hover{
-  background-color: rgba(255,255,255,0.5);
+.City:hover {
+  background-color: #ffffff80;
+  cursor: pointer;
+}
+
+.City:active {
+  background-color: #0000004d;
 }
 
 .City li {
   width: 90%;
   display: flex;
-  justify-content: space-between;
-  
-  color: white;
+  justify-content: space-between; 
+  color: #ffffff;
   z-index: 0;
+}
+
+.City li:hover, 
+.City li:active {
+  cursor: pointer;
 }
