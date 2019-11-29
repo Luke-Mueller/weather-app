@@ -3,7 +3,6 @@
   width: 85vw;
   overflow-y: scroll;
   z-index: 1;
-  padding: 10px;
   position: fixed;
   top: 22%;
 }

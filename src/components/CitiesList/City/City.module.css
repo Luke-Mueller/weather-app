@@ -1,5 +1,5 @@
 .City {
-  margin: 5px;
+  margin: 0.4rem;
   height: 18%;
   display: flex;
   justify-content: center;
@@ -7,7 +7,6 @@
   border-top: 1px solid #ff69b4;
   border-bottom: 1px solid #ff69b4;
   border-radius: 8px;
-  padding: 10px;
   z-index: 100;
 }
 

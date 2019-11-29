@@ -5,8 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 60px 20px 70px 70px;
-    color: rgba(0, 0, 0, 0.5);
+    padding: 3.75rem 1.25rem 4.5rem 4.5rem;
+    color: #00000080;
     /* border: 1px solid hotpink; */
 }
 
@@ -19,32 +19,31 @@
 }
 
 .WeatherDisplay h1 {
-    font-size: 80px;
+    font-size: 5rem;
 }
 
 .WeatherDisplay h2 {
-    font-size: 30px;
+    font-size: 1.9rem;
     font-weight: 600;
     display: block;
 }
 
 .WeatherDisplay h3 {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 500;
 }
 
 .WeatherDisplay h4 {
-    font-size: 20px;
-    margin: 3px;
+    font-size: 1.25rem;
+    margin: 0.25rem;
 }
 
 .WeatherDisplay button {
     display: block;
-    /*background-color: rgba(0, 0, 0, 0.5);*/
     background-image: url("../../Assets/svg/search.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 48px;
-    width: 48px;
-    margin: 5px;
+    height: 3rem;
+    width: 3rem;
+    margin: 0.25rem;
 }

@@ -8,7 +8,6 @@
     background-image: url("../../Assets/daytime-mobile.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    /*background-position: right;*/
 }
 
 p {
@@ -18,16 +17,4 @@ p {
 
 img {
     background-color: transparent;
-}
-
-.Search {
-
-    /*background-color: rgba(0, 0, 0, 0.5);*/
-    /*background-image: url("../../Assets/svg/search.svg");*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-    /*background-color: white;*/
-    height: 100%;
-    width: 100%;
-    /*margin: 5px;*/
 }

@@ -1,18 +1,14 @@
 .Forecast {
-    width: 102%;
-    /* height: 50%; */
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* margin-top: 30px; */
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgb(153, 204, 255);
-    border-radius: 4px;
-    padding: 20px;
+    background-color: #000000cc;
+    padding: 1.25rem;
 }
 
 .Forecast div {
     width: 20%;
-    padding: 5px;
+    padding: 0.4rem;
     text-align: center;
 }
