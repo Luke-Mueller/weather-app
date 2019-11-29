@@ -23,7 +23,7 @@ class Weather extends Component {
 
   searchHandler = (e) => {
     const input = e.target.elements.city.value;
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const cities = [];
   
     fetch('city.list.min.json')
@@ -47,7 +47,7 @@ class Weather extends Component {
         this.setState({error: err, loading: false});
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         wait(3500).then(() => {
-          this.setState({error: ''})
+          this.setState({ error: '' })
         });
       });
 
@@ -61,13 +61,13 @@ class Weather extends Component {
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     if (input === '') {
-      this.setState({cities : null, error: `No city entered`, loading: false});
+      this.setState({ cities : null, error: `No city entered`, loading: false });
     } else {
-      this.setState({cities: null, error: `"${input}" not found`, loading: false});
+      this.setState({ cities: null, error: `"${input}" not found`, loading: false });
     }
 
     wait(3500).then(() => {
-      this.setState({error: ''});
+      this.setState({ error: '' });
     });
   };
 
@@ -83,11 +83,14 @@ class Weather extends Component {
           this.setState({ state: data.result.geographies["Census Blocks"][0].STATE });
           this.getDataHandler(city.id);
         })
+        .then(() => {
+          this.setState({ loading: false });
+        })
         .catch(err => {
           this.setState({error: err, loading: false});
           const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           wait(3500).then(() => {
-            this.setState({error: ''});
+            this.setState({ error: '' });
           });
         });
     };
@@ -101,20 +104,24 @@ class Weather extends Component {
     for(let i = 0; i < cities.length; i++) {
       if(cities[i].country !== 'US') {
         cityStates.push(cities[i]);
-        this.setState({cities: cityStates, loading: false});
+        this.setState({ cities: cityStates });
+        if(cities[i] === cities[cities.length - 1]) this.setState({ loading: false });
       } else {
         fetch(proxyUrl + `https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${cities[i].coord.lon}&y=${cities[i].coord.lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&layers=14&format=json`)
         .then(res => res.json())
         .then(data => {
           cities[i].state = data.result.geographies["Census Blocks"][0].STATE; 
           cityStates.push(cities[i]);
-          this.setState({cities: cityStates, loading: false});
+          this.setState({ cities: cityStates });
+        })
+        .then(() => {
+          this.setState({ loading: false });
         })
         .catch(err => {
-          this.setState({error: err, loading: false});
+          this.setState({ error: err, loading: false });
           const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
           wait(3500).then(() => {
-            this.setState({error: ''});
+            this.setState({ error: '' });
           });
         });
       };
@@ -124,7 +131,7 @@ class Weather extends Component {
 //  Fetches weather data from openweathermaps API
 
   getDataHandler = (id) => {
-    this.setState({cities: []});
+    this.setState({ cities: [] });
 
     // fetches current weather data
     fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=imperial&appid=${API_KEY}`)
@@ -133,7 +140,7 @@ class Weather extends Component {
         this.setState({ weather: data });
       })
       .catch(err => {
-        this.setState({error: err, loading: false});
+        this.setState({ error: err, loading: false });
         const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         wait(3500).then(() => {
           this.setState({ error: '' });
@@ -146,8 +153,8 @@ class Weather extends Component {
       .then(data => {
         this.setState({
           forecast: data,
-          loading: false,
-          showFormModal: false
+          showFormModal: false,
+          loading: false
         });
       })
       .catch(err => {
