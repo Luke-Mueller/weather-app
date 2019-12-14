@@ -33,7 +33,7 @@ const WeatherDisplay = (props) => {
       day = null;
   }
 
-  const fullDate = `${day} ${date.getMonth()}. ${date.getDate()}. ${date.getFullYear()}`;
+  const fullDate = `${day} ${date.getMonth() + 1}. ${date.getDate()}. ${date.getFullYear()}`;
 
   let h2;
   if(props.weather.sys.country !== 'US') {

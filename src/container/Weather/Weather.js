@@ -74,6 +74,7 @@ class Weather extends Component {
 //  Fetches weather data
 
   getResult = (city) => {
+    if (this.state.loading === false) this.setState({ loading: true });
     if (city.country !== 'US') {
       this.getDataHandler(city.id);
     } else if(city.country === 'US') {
