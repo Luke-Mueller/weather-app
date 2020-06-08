@@ -8,7 +8,7 @@ import ForecastDisplay from '../../components/ForecastDisplay/ForecastDisplay';
 
 import classes from './Weather.module.css';
 
-const API_KEY = '8255d1850797d8e23d1523be11d8b8b6';
+const API_KEY = '';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 class Weather extends Component {
@@ -129,7 +129,7 @@ class Weather extends Component {
     };
   };
    
-//  Fetches weather data from openweathermaps API
+//  Fetches weather data from openweathermap API
 
   getDataHandler = (id) => {
     this.setState({ cities: [] });
